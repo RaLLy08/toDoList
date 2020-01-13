@@ -5,16 +5,12 @@ class Controller {
         this._view = view;
         this._store = createStore(this.reducer);
 
-        this._initState = [{
-            text: '',
+        this._initialState = [{
+            text: 'first task',
             id: 0,
             completed: false
         }]
 
-        this.dispatch({
-            type: 'ADD_TODO',
-            payload: 'this.input.value'
-        })
     }   
 
     reducer = (state = this._initialState, action) => {
@@ -26,10 +22,11 @@ class Controller {
                         text: action.text,
                         id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1
                     }
+                   
                 ];
             case 'DELETE_TODO':
                 return state.filter(todo =>
-                    todo.id !== +action.text
+                    todo.id !== +action.id
                 );
             case 'COMPLETE_TODO':
                 return state.map(todo =>
@@ -40,7 +37,10 @@ class Controller {
             default:
                 return state;
         }
-    };       
+    };    
+    
+    getState = () => this._store.getState();
+
 
     dispatch = action => {
         this._store.dispatch(action);
