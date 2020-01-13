@@ -98,8 +98,17 @@ class View {
             
             this.input.value = '';
         }
-    }
+        
+        onkeydown = (e) => {
+            if (e.key === 'Enter' && this.input.value.replace(/\s/g, '') !== '') {
+                e.preventDefault();
+                this.add.click();
 
+                this.input.value = '';
+            }
+        }  
+          
+    }
 }
 
 export default View;
